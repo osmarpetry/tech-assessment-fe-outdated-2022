@@ -11,5 +11,18 @@ datasource db {
 }
 
 model Trial {
-  id String @id @default(uuid())
+  id          String      @id @default(uuid())
+  description String
+  participants Participant[]
+}
+
+model Participant {
+  id       String   @id
+  name     String
+  height   Float
+  weight   Float
+  diabetes Boolean
+  covid19  Boolean
+  trialId  String
+  trial    Trial    @relation(fields: [trialId], references: [id])
 }

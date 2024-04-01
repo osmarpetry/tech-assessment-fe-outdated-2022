@@ -3,13 +3,10 @@ import { Prisma } from '@prisma/client';
 import { PrismaService } from 'src/common/prisma.service';
 
 @Injectable()
-export class TrialsService {
+export class ParticipantsService {
   constructor(private prismaService: PrismaService) {}
 
-  async getTrials(whereInput?: Prisma.TrialWhereInput) {
-    return this.prismaService.trial.findMany({
-      where: whereInput,
-      include: { participants: true },
-    });
+  async getParticipants(whereInput?: Prisma.ParticipantWhereInput) {
+    return this.prismaService.participant.findMany({ where: whereInput });
   }
 }

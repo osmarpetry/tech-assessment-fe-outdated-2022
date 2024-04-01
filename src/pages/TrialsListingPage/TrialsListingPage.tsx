@@ -82,6 +82,8 @@ const GET_TRIALS = gql`
   query GetTrials {
     trials {
       id
+      name
+      participants
     }
   }
 `;
@@ -99,8 +101,8 @@ const TrialsListingPage = () => {
         <TrialCard key={trial.id}>
           <TrialLink to={`/trials/${trial.id}`}>
             <TrialLinkText>
-              <TrialName>{trial.id}</TrialName>
-              <ParticipantCount>{trial.id}</ParticipantCount>
+              <TrialName>{trial.name}</TrialName>
+              <ParticipantCount>{trial.participants}</ParticipantCount>
             </TrialLinkText>
             <Logo src={RightIcon} alt={`Go to ${trial.id}`} />
           </TrialLink>
