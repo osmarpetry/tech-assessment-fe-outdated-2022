@@ -1,9 +1,23 @@
 type Query {
   trials: [Trial!]!
+  trial(id: String!): Trial!
 }
 
 type Trial {
   id: String!
   description: String!
   participants: [Participant!]!
+}
+
+type Mutation {
+  addParticipantToTrial(trialId: String!, participant: ParticipantInput!): Trial!
+}
+
+input ParticipantInput {
+  id: String!
+  name: String!
+  height: Float!
+  weight: Float!
+  diabetes: Boolean!
+  covid19: Boolean!
 }

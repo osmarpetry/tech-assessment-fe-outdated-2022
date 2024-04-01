@@ -10,3 +10,4 @@ type Participant {
   diabetes: Boolean!
   covid19: Boolean!
 }
+

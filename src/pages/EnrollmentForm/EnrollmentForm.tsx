@@ -85,15 +85,22 @@ type FormData = {
   trial: string;
 };
 
-const ENROLL_PARTICIPANT = gql`
-  mutation EnrollParticipant($input: ParticipantInput!) {
-    enrollParticipant(input: $input) {
+const ADD_PARTICIPANT_TO_TRIAL = gql`
+  mutation AddParticipantToTrial(
+    $trialId: String!
+    $participant: ParticipantInput!
+  ) {
+    addParticipantToTrial(trialId: $trialId, participant: $participant) {
       id
     }
   }
 `;
 
 const EnrollmentForm = () => {
+  const [addParticipantToTrial, { data, loading, error }] = useMutation(
+    ADD_PARTICIPANT_TO_TRIAL
+  );
+
   const {
     register,
     handleSubmit,
@@ -103,10 +110,20 @@ const EnrollmentForm = () => {
   const onSubmit = (data: FormData) => {
     // Handle form submission here
     console.log(data);
+    addParticipantToTrial({
+      variables: {
+        trialId: '1',
+        participant: {
+          id: '66',
+          name: data.name,
+          height: parseFloat(data.height),
+          weight: parseFloat(data.weight),
+          diabetes: data.diabetes,
+          covid19: data.covid19,
+        },
+      },
+    });
   };
-
-  const [enrollParticipant, { data, loading, error }] =
-    useMutation(ENROLL_PARTICIPANT);
 
   return (
     <FormContainer onSubmit={handleSubmit(onSubmit)}>

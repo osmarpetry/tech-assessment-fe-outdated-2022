@@ -101,16 +101,21 @@ const mockParticipants = [
 ];
 
 const GET_PARTICIPANTS = gql`
-  query GetParticipants {
-    participants {
+  query GetParticipants($trialId: String!) {
+    trial(id: $trialId) {
       id
-      name
+      participants {
+        id
+        name
+      }
     }
   }
 `;
 
 const ParticipantsListingPage = () => {
-  const { loading, error, data } = useQuery(GET_PARTICIPANTS);
+  const { loading, error, data } = useQuery(GET_PARTICIPANTS, {
+    variables: { trialId: '1' }, // Replace '01' with the actual trial ID from the router
+  });
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error :(</p>;
@@ -121,12 +126,12 @@ const ParticipantsListingPage = () => {
         <Header>Participants</Header>
         <Button to="/enroll-a-participant">Enroll a participant</Button>
       </HeaderContainer>
-      {data?.participants.map((participant) => (
+      {data?.trial.participants.map((participant) => (
         <ParticipantCard key={participant.id}>
           <ParticipantLink to={`/participants/${participant.id}`}>
             <ParticipantLinkText>
               <ParticipantName>{participant.name}</ParticipantName>
-              {/* <ParticipantCount>{participant.trials}</ParticipantCount> */}
+              <ParticipantCount>{participant.id}</ParticipantCount>
             </ParticipantLinkText>
             <Logo src={RightIcon} alt={`Go to ${participant.name}`} />
           </ParticipantLink>

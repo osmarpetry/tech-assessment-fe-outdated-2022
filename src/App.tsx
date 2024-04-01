@@ -10,16 +10,16 @@ const App = () => {
   return (
     <Dashboard>
       <Routes>
-        {/* <Route path="/" element={<ParticipantsListingPage />}></Route> */}
+        <Route path="/trials/:id" element={<ParticipantsListingPage />}></Route>
         <Route path="/trials" element={<TrialsListingPage />}></Route>
-        {/* <Route
+        <Route
           path="/enroll-a-participant"
           element={<EnrollmentForm />}
         ></Route>
         <Route
           path="/enroll-a-participant-result"
           element={<EnrollmentResult />}
-        ></Route> */}
+        ></Route>
       </Routes>
     </Dashboard>
   );
