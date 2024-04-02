@@ -1,99 +1,20 @@
 import { useForm } from 'react-hook-form';
-import InputMask from 'react-input-mask';
 import { useNavigate, useParams } from 'react-router-dom';
-import styled from 'styled-components';
 import { useMutation, gql, useQuery } from '@apollo/client';
-
-const FormContainer = styled.form`
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-`;
-
-const FieldWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  margin-bottom: 32px;
-`;
-
-const Label = styled.label`
-  font-size: 16px;
-  font-weight: 400;
-  margin-bottom: 8px;
-`;
-
-const Input = styled.input`
-  height: 40px;
-  padding: 8px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-`;
-
-const InputMaskStyled = styled(InputMask)`
-  height: 40px;
-  padding: 8px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-`;
-
-const ErrorMessage = styled.span`
-  font-size: 16px;
-  color: red;
-  margin-top: 8px;
-`;
-
-const CheckboxWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  margin-bottom: 16px;
-`;
-
-const CheckboxContainer = styled.div`
-  display: flex;
-  align-items: center;
-  margin-bottom: 16px;
-`;
-
-const CheckboxLabel = styled.label`
-  font-size: 16px;
-  margin-left: 8px;
-`;
-
-const Select = styled.select`
-  height: 40px;
-  padding: 8px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-`;
-
-const Button = styled.button`
-  padding: 10px 20px;
-  margin-top: 20px;
-  background-color: rgba(50, 95, 100, 1);
-  color: #fff;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  width: fit-content;
-`;
-
-const Header = styled.h1`
-  color: rgba(0, 0, 0, 1);
-  font-size: 32px;
-  font-weight: 400;
-  line-height: 40px;
-  text-align: left;
-  margin: 20px 0 20px 0;
-`;
-
-type FormData = {
-  name: string;
-  height: string;
-  weight: string;
-  diabetes: boolean;
-  covid19: boolean;
-  trial: string;
-};
+import {
+  FormContainer,
+  Header,
+  FieldWrapper,
+  Label,
+  Input,
+  ErrorMessage,
+  InputMaskStyled,
+  CheckboxWrapper,
+  CheckboxContainer,
+  CheckboxLabel,
+  Select,
+  Button,
+} from './styled';
 
 const ADD_PARTICIPANT_TO_TRIAL = gql`
   mutation AddParticipantToTrial(
@@ -118,6 +39,15 @@ const GET_TRIALS = gql`
     }
   }
 `;
+
+type FormData = {
+  name: string;
+  height: string;
+  weight: string;
+  diabetes: boolean;
+  covid19: boolean;
+  trial: string;
+};
 
 const EnrollmentForm = () => {
   const navigate = useNavigate();
@@ -163,7 +93,6 @@ const EnrollmentForm = () => {
   return (
     <FormContainer onSubmit={handleSubmit(onSubmit)}>
       <Header>Enroll a participant</Header>
-
       <FieldWrapper>
         <Label htmlFor="name">Name</Label>
         <Input

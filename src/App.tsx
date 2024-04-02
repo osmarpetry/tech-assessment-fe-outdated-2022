@@ -4,7 +4,7 @@ import TrialsListingPage from './pages/TrialsListingPage/TrialsListingPage';
 import Dashboard from './pages/Dashboard/Dashboard';
 import EnrollmentForm from './pages/EnrollmentForm/EnrollmentForm';
 import ParticipantsListingPage from './pages/ParticipantsListingPage/ParticipantsListingPage';
-import EnrollmentResult from './pages/EnrollmentForm/EnrollmentResult';
+import EnrollmentResult from './pages/EnrollmentResult/EnrollmentResult';
 
 const App = () => {
   return (
