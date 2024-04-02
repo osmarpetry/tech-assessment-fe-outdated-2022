@@ -1,10 +1,10 @@
-import { Routes, Route, Outlet, Link, Navigate } from 'react-router-dom';
+import { Routes, Route, Navigate } from 'react-router-dom';
 
 import TrialsListingPage from './pages/TrialsListingPage/TrialsListingPage';
 import Dashboard from './pages/Dashboard/Dashboard';
-import EnrollmentForm from './pages/EnrollmentForm/EnrollmentForm.tsx';
-import ParticipantsListingPage from './pages/ParticipantsListingPage/ParticipantsListingPage.tsx';
-import EnrollmentResult from './pages/EnrollmentForm/EnrollmentResult.tsx';
+import EnrollmentForm from './pages/EnrollmentForm/EnrollmentForm';
+import ParticipantsListingPage from './pages/ParticipantsListingPage/ParticipantsListingPage';
+import EnrollmentResult from './pages/EnrollmentForm/EnrollmentResult';
 
 const App = () => {
   return (

@@ -1,4 +1,3 @@
-import React from 'react';
 import { useForm } from 'react-hook-form';
 import InputMask from 'react-input-mask';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -114,10 +113,11 @@ const GET_TRIALS = gql`
 const EnrollmentForm = () => {
   const navigate = useNavigate();
   const { id } = useParams();
-  const trialId = parseFloat(id);
+  const trialId = parseFloat(id || '');
 
-  const [addParticipantToTrial, { data, loading: loadingAdd, error }] =
-    useMutation(ADD_PARTICIPANT_TO_TRIAL);
+  const [addParticipantToTrial, { loading: loadingAdd }] = useMutation(
+    ADD_PARTICIPANT_TO_TRIAL
+  );
   const { data: trialsData, loading } = useQuery(GET_TRIALS);
 
   const {
@@ -144,7 +144,7 @@ const EnrollmentForm = () => {
           state: { isEligible: true },
         });
       })
-      .catch((error) => {
+      .catch(() => {
         navigate(`/trials/${trialId}/enroll-a-participant-result`, {
           state: { isEligible: false },
         });
