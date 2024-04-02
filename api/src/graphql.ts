@@ -29,6 +29,7 @@ export interface Participant {
     weight: number;
     diabetes: boolean;
     covid19: boolean;
+    createdAt: string;
 }
 
 export interface IQuery {

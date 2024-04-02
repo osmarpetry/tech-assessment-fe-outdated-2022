@@ -11,6 +11,7 @@ type Participant {
   weight: Float!
   diabetes: Boolean!
   covid19: Boolean!
+  createdAt: String!
 }
 
 type Query {

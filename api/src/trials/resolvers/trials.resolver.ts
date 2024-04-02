@@ -1,6 +1,6 @@
 import { Resolver, Query, Mutation, Args } from '@nestjs/graphql';
 import { TrialsService } from '../services/trials.service';
-import { Participant, Trial } from '@prisma/client';
+import { Trial } from '@prisma/client';
 import { ParticipantInput } from 'src/graphql';
 
 @Resolver('Trial')

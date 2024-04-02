@@ -1,5 +1,5 @@
-import React from 'react';
-import { Link, useLocation, useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
+import { format } from 'date-fns';
 import styled from 'styled-components';
 import RightIcon from '../TrialsListingPage/right.svg'; // Import the SVG logo file
 import { useQuery, gql } from '@apollo/client';
@@ -100,6 +100,7 @@ const GET_PARTICIPANTS = gql`
       participants {
         id
         name
+        createdAt
       }
     }
   }
@@ -129,7 +130,10 @@ const ParticipantsListingPage = () => {
           <ParticipantLink>
             <ParticipantLinkText>
               <ParticipantName>{participant.name}</ParticipantName>
-              <ParticipantCount>{participant.id}</ParticipantCount>
+              <ParticipantCount>
+                Enrolled in{' '}
+                {format(new Date(parseInt(participant.createdAt)), 'MMM, dd')}
+              </ParticipantCount>
             </ParticipantLinkText>
             <Logo src={RightIcon} alt={`Go to ${participant.name}`} />
           </ParticipantLink>

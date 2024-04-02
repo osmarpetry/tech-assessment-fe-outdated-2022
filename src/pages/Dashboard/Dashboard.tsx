@@ -1,5 +1,5 @@
 import React from 'react';
-import { NavLink as RouteNavLink } from 'react-router-dom';
+import { Link, NavLink as RouteNavLink } from 'react-router-dom';
 import styled from 'styled-components';
 import LogoSvg from './logo.svg'; // Import the SVG logo file
 
@@ -60,10 +60,10 @@ const NavLink = styled(RouteNavLink)`
 
 const Content = styled.main`
   flex-grow: 1;
-  padding: 50px 640px;
+  padding: 15px 450px;
 
   @media (max-width: ${breakpoints.tablet}) {
-    padding: 15px 150px;
+    padding: 15px 50px;
   }
 
   @media (max-width: ${breakpoints.mobile}) {
@@ -75,8 +75,9 @@ const Dashboard = ({ children }) => {
   return (
     <DashboardContainer>
       <Header>
-        <Logo src={LogoSvg} alt="Curebase Logo" />
-        {/* Use the imported SVG logo */}
+        <Link to="/">
+          <Logo src={LogoSvg} alt="Curebase Logo" />
+        </Link>
         <NavLinkContainer>
           <NavLink to="/">Participants</NavLink>
           <NavLink to="/trials">Trials</NavLink>

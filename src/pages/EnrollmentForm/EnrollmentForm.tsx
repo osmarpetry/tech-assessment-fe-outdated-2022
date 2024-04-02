@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form';
 import InputMask from 'react-input-mask';
 import { useNavigate, useParams } from 'react-router-dom';
 import styled from 'styled-components';
-import { useMutation, gql } from '@apollo/client';
+import { useMutation, gql, useQuery } from '@apollo/client';
 
 const FormContainer = styled.form`
   display: flex;
@@ -101,14 +101,23 @@ const ADD_PARTICIPANT_TO_TRIAL = gql`
   }
 `;
 
+const GET_TRIALS = gql`
+  query GetTrials {
+    trials {
+      id
+      name
+    }
+  }
+`;
+
 const EnrollmentForm = () => {
   const navigate = useNavigate();
   const { id } = useParams();
   const trialId = parseFloat(id);
 
-  const [addParticipantToTrial, { data, loading, error }] = useMutation(
-    ADD_PARTICIPANT_TO_TRIAL
-  );
+  const [addParticipantToTrial, { data, loading: loadingAdd, error }] =
+    useMutation(ADD_PARTICIPANT_TO_TRIAL);
+  const { data: trialsData, loading } = useQuery(GET_TRIALS);
 
   const {
     register,
@@ -193,15 +202,23 @@ const EnrollmentForm = () => {
       </CheckboxWrapper>
       <FieldWrapper>
         <Label htmlFor="trial">Select Trial</Label>
-        <Select id="trial" {...register('trial', { required: true })}>
+        <Select
+          id="trial"
+          disabled={loading}
+          {...register('trial', { required: true })}
+        >
           <option value="">Select a trial</option>
-          <option value="trial1">Trial 1</option>
-          <option value="trial2">Trial 2</option>
-          <option value="trial3">Trial 3</option>
+          {trialsData?.trials.map((trial) => (
+            <option key={trial.id} value={trial.id}>
+              {trial.name}
+            </option>
+          ))}
         </Select>
         {errors.trial && <ErrorMessage>This field is required</ErrorMessage>}
       </FieldWrapper>
-      <Button type="submit">Save</Button>
+      <Button type="submit" disabled={loadingAdd}>
+        {!loadingAdd ? 'Save' : 'Saving...'}
+      </Button>
     </FormContainer>
   );
 };

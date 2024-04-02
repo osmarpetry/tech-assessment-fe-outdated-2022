@@ -17,12 +17,13 @@ model Trial {
 }
 
 model Participant {
-  id       Int     @id @default(autoincrement())
-  name     String
-  height   Float
-  weight   Float
-  diabetes Boolean
-  covid19  Boolean
-  trialId  Int
-  trial    Trial   @relation(fields: [trialId], references: [id])
+  id        Int      @id @default(autoincrement())
+  name      String
+  height    Float
+  weight    Float
+  diabetes  Boolean
+  covid19   Boolean
+  trialId   Int
+  trial     Trial    @relation(fields: [trialId], references: [id])
+  createdAt DateTime @default(now())
 }

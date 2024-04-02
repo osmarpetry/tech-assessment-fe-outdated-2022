@@ -1,4 +1,4 @@
-import { Routes, Route, Outlet, Link } from 'react-router-dom';
+import { Routes, Route, Outlet, Link, Navigate } from 'react-router-dom';
 
 import TrialsListingPage from './pages/TrialsListingPage/TrialsListingPage';
 import Dashboard from './pages/Dashboard/Dashboard';
@@ -10,16 +10,17 @@ const App = () => {
   return (
     <Dashboard>
       <Routes>
-        <Route path="/trials/:id" element={<ParticipantsListingPage />}></Route>
-        <Route path="/trials" element={<TrialsListingPage />}></Route>
+        <Route path="/" element={<Navigate to="/trials" />} />
+        <Route path="/trials/:id" element={<ParticipantsListingPage />} />
+        <Route path="/trials" element={<TrialsListingPage />} />
         <Route
           path="/trials/:id/enroll-a-participant"
           element={<EnrollmentForm />}
-        ></Route>
+        />
         <Route
           path="/trials/:id/enroll-a-participant-result"
           element={<EnrollmentResult />}
-        ></Route>
+        />
       </Routes>
     </Dashboard>
   );
