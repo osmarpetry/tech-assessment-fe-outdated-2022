@@ -47,6 +47,7 @@
     ]
   },
   "devDependencies": {
+    "@types/react-input-mask": "^3.0.5",
     "@typescript-eslint/parser": "^5.62.0"
   }
 }

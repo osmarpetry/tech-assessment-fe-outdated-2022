@@ -1,4 +1,14 @@
-> Nao executado CI para dependencias por ser um projeto boilerplate para teste nunca usado.
+# How to run
+1. Inside the root folder, run `npm install` to install the frontend dependencies.
+2. Run `npm start` to start the frontend.
+
+## API Setup
+1. Inside the `api` folder, run `npm install` to install the API dependencies.
+2. Run `npx prisma migrate dev --name init` to apply the initial database migration (only if is necessery).
+3. Run `npx prisma studio` to open Prisma Studio and manage the database (http://localhost:5555/).
+4. Run `npm run start:dev` to start the API (http://localhost:3000/ and http://localhost:4000/graphql).
+
+> Note: Make sure you have Node >=14.0.0 installed to run this project.
 
 # Sr. Engineer tech assessment
 As a Sr. Engineer we want to see your skills with architecture, security, performance and clean code.

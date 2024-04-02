@@ -14,7 +14,7 @@ const FormContainer = styled.form`
 const FieldWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  margin-bottom: 16px;
+  margin-bottom: 32px;
 `;
 
 const Label = styled.label`
@@ -68,13 +68,14 @@ const Select = styled.select`
 `;
 
 const Button = styled.button`
-  height: 40px;
-  padding: 8px 16px;
-  background-color: #007bff;
+  padding: 10px 20px;
+  margin-top: 20px;
+  background-color: rgba(50, 95, 100, 1);
   color: #fff;
   border: none;
-  border-radius: 4px;
+  border-radius: 5px;
   cursor: pointer;
+  width: fit-content;
 `;
 
 type FormData = {
@@ -159,7 +160,7 @@ const EnrollmentForm = () => {
           id="name"
           {...register('name', { required: true })}
         />
-        {errors.name && <ErrorMessage>This field is required</ErrorMessage>}
+        {errors.name && <ErrorMessage>This is a required field</ErrorMessage>}
       </FieldWrapper>
       <FieldWrapper>
         <Label htmlFor="height">Height (inches)</Label>
@@ -169,7 +170,7 @@ const EnrollmentForm = () => {
           id="height"
           {...register('height', { required: true })}
         />
-        {errors.height && <ErrorMessage>This field is required</ErrorMessage>}
+        {errors.height && <ErrorMessage>This is a required field</ErrorMessage>}
       </FieldWrapper>
       <FieldWrapper>
         <Label htmlFor="weight">Weight (pounds)</Label>
@@ -179,9 +180,8 @@ const EnrollmentForm = () => {
           id="weight"
           {...register('weight', { required: true })}
         />
-        {errors.weight && <ErrorMessage>This field is required</ErrorMessage>}
+        {errors.weight && <ErrorMessage>This is a required field</ErrorMessage>}
       </FieldWrapper>
-
       <CheckboxWrapper>
         <CheckboxContainer>
           <input
@@ -214,7 +214,7 @@ const EnrollmentForm = () => {
             </option>
           ))}
         </Select>
-        {errors.trial && <ErrorMessage>This field is required</ErrorMessage>}
+        {errors.trial && <ErrorMessage>This is a required field</ErrorMessage>}
       </FieldWrapper>
       <Button type="submit" disabled={loadingAdd}>
         {!loadingAdd ? 'Save' : 'Saving...'}
