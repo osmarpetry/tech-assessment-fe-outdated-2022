@@ -1,5 +1,5 @@
 import React from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import Eligible from './eligible.svg';
 import NotEligible from './not-eligible.svg';
@@ -44,34 +44,36 @@ const Button = styled.button`
   cursor: pointer;
 `;
 
-type EnrollmentResultProps = {
-  isEligible: boolean;
-};
-
-const EnrollmentResult: React.FC<EnrollmentResultProps> = ({ isEligible }) => {
+const EnrollmentResult = () => {
   const location = useLocation();
-  const { participant } = location.state as any; // Assuming state is passed from the form
+  const navigate = useNavigate();
+
+  const { isEligible } = location.state as any; // Assuming state is passed from the form
+
+  const handleRedirectOk = () => {
+    navigate(-2);
+  };
 
   return (
     <Container>
-      {/* {isEligible ? ( */}
-      <>
-        <Image src={Eligible} alt="Success" />
-        <Title>Participant is eligible</Title>
-        <Description>
-          The participant can participate in this study.
-        </Description>
-      </>
-      {/* ) : ( */}
-      <>
-        <Image src={NotEligible} alt="Fail" height={'30px'} />
-        <Title>Participant is not eligible</Title>
-        <Description>
-          The participant can't participate in this study.
-        </Description>
-      </>
-      {/* )} */}
-      <Button>Ok</Button>
+      {isEligible ? (
+        <>
+          <Image src={Eligible} alt="Success" />
+          <Title>Participant is eligible</Title>
+          <Description>
+            The participant can participate in this study.
+          </Description>
+        </>
+      ) : (
+        <>
+          <Image src={NotEligible} alt="Fail" height={'30px'} />
+          <Title>Participant is not eligible</Title>
+          <Description>
+            The participant can't participate in this study.
+          </Description>
+        </>
+      )}
+      <Button onClick={handleRedirectOk}>Ok</Button>
     </Container>
   );
 };

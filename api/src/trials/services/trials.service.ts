@@ -19,14 +19,22 @@ export class TrialsService {
       weight: number;
     },
   ): Promise<ParticipantModel> {
-    return this.prisma.participant.create({
-      data: {
-        ...participant,
-        trial: {
-          connect: { id: trialId },
+    const weightInPounds = participant.weight;
+    const heightInFeet = participant.height;
+    const heightInInches = heightInFeet * 12;
+    const bmi = (weightInPounds / (heightInInches * heightInInches)) * 703;
+    if (participant.diabetes && !participant.covid19 && bmi > 18 && bmi < 30) {
+      return this.prisma.participant.create({
+        data: {
+          ...participant,
+          trial: {
+            connect: { id: trialId },
+          },
         },
-      },
-    });
+      });
+    } else {
+      throw new Error(`Participant is not eligible`);
+    }
   }
 
   async trial(trialId: number): Promise<TrialModel | null> {

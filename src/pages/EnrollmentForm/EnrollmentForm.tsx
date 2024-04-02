@@ -1,6 +1,7 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import InputMask from 'react-input-mask';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { useMutation, gql } from '@apollo/client';
 
@@ -101,6 +102,8 @@ const ADD_PARTICIPANT_TO_TRIAL = gql`
 `;
 
 const EnrollmentForm = () => {
+  const navigate = useNavigate();
+
   const [addParticipantToTrial, { data, loading, error }] = useMutation(
     ADD_PARTICIPANT_TO_TRIAL
   );
@@ -112,22 +115,28 @@ const EnrollmentForm = () => {
   } = useForm<FormData>();
 
   const onSubmit = async (data: FormData) => {
-    try {
-      await addParticipantToTrial({
-        variables: {
-          trialId: 1,
-          participant: {
-            name: data.name,
-            height: parseFloat(data.height),
-            weight: parseFloat(data.weight),
-            diabetes: data.diabetes,
-            covid19: data.covid19,
-          },
+    await addParticipantToTrial({
+      variables: {
+        trialId: 1,
+        participant: {
+          name: data.name,
+          height: parseFloat(data.height),
+          weight: parseFloat(data.weight),
+          diabetes: data.diabetes,
+          covid19: data.covid19,
         },
+      },
+    })
+      .then(() => {
+        navigate('/enroll-a-participant-result', {
+          state: { isEligible: true },
+        });
+      })
+      .catch((error) => {
+        navigate('/enroll-a-participant-result', {
+          state: { isEligible: false },
+        });
       });
-    } catch (error) {
-      console.log(error);
-    }
   };
 
   return (
@@ -144,7 +153,7 @@ const EnrollmentForm = () => {
       <FieldWrapper>
         <Label htmlFor="height">Height (inches)</Label>
         <InputMaskStyled
-          mask="99.99 ft"
+          mask="9.99 ft"
           type="text"
           id="height"
           {...register('height', { required: true })}
@@ -154,7 +163,7 @@ const EnrollmentForm = () => {
       <FieldWrapper>
         <Label htmlFor="weight">Weight (pounds)</Label>
         <InputMaskStyled
-          mask="99.99 lbs"
+          mask="999.99 lbs"
           type="text"
           id="weight"
           {...register('weight', { required: true })}
@@ -167,7 +176,7 @@ const EnrollmentForm = () => {
           <input
             type="checkbox"
             id="diabetes"
-            {...register('diabetes', { required: true })}
+            {...register('diabetes', { required: false })}
           />
           <CheckboxLabel htmlFor="diabetes">I have diabetes</CheckboxLabel>
         </CheckboxContainer>
@@ -175,7 +184,7 @@ const EnrollmentForm = () => {
           <input
             type="checkbox"
             id="covid19"
-            {...register('covid19', { required: true })}
+            {...register('covid19', { required: false })}
           />
           <CheckboxLabel htmlFor="covid19">I have COVID-19</CheckboxLabel>
         </CheckboxContainer>
