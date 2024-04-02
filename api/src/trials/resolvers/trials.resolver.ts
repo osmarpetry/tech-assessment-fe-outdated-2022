@@ -1,13 +1,28 @@
-import { Resolver, Query } from '@nestjs/graphql';
+import { Resolver, Query, Mutation, Args } from '@nestjs/graphql';
 import { TrialsService } from '../services/trials.service';
-import { Trial } from 'src/graphql';
+import { Trial } from '@prisma/client';
+import { ParticipantInput } from 'src/graphql';
 
-@Resolver()
+@Resolver('Trial')
 export class TrialsResolver {
-  constructor(private trialsService: TrialsService) {}
+  constructor(private readonly trialsService: TrialsService) {}
 
   @Query('trials')
-  async trials(): Promise<Trial[]> {
-    return await this.trialsService.getTrials();
+  async getTrials(): Promise<Trial[]> {
+    return this.trialsService.trials();
+  }
+
+  @Query('trial')
+  async getTrial(@Args('id') id: number): Promise<Trial | null> {
+    return this.trialsService.trial(id);
+  }
+
+  @Mutation('addParticipantToTrial')
+  async addParticipant(
+    @Args('trialId') trialId: number,
+    @Args('participant')
+    participant: ParticipantInput,
+  ): Promise<Trial> {
+    return this.trialsService.addParticipantToTrial(trialId, participant);
   }
 }
