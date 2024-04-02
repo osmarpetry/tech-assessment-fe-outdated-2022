@@ -1,7 +1,7 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import InputMask from 'react-input-mask';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import { useMutation, gql } from '@apollo/client';
 
@@ -103,6 +103,8 @@ const ADD_PARTICIPANT_TO_TRIAL = gql`
 
 const EnrollmentForm = () => {
   const navigate = useNavigate();
+  const { id } = useParams();
+  const trialId = parseFloat(id);
 
   const [addParticipantToTrial, { data, loading, error }] = useMutation(
     ADD_PARTICIPANT_TO_TRIAL
@@ -128,12 +130,12 @@ const EnrollmentForm = () => {
       },
     })
       .then(() => {
-        navigate('/enroll-a-participant-result', {
+        navigate(`/trials/${trialId}/enroll-a-participant-result`, {
           state: { isEligible: true },
         });
       })
       .catch((error) => {
-        navigate('/enroll-a-participant-result', {
+        navigate(`/trials/${trialId}/enroll-a-participant-result`, {
           state: { isEligible: false },
         });
       });

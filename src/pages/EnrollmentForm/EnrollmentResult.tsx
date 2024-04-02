@@ -48,7 +48,7 @@ const EnrollmentResult = () => {
   const location = useLocation();
   const navigate = useNavigate();
 
-  const { isEligible } = location.state as any; // Assuming state is passed from the form
+  const { isEligible } = location.state;
 
   const handleRedirectOk = () => {
     navigate(-2);

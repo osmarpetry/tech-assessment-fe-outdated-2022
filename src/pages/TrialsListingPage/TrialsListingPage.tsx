@@ -1,6 +1,6 @@
 import React from 'react';
 import { useQuery, gql } from '@apollo/client';
-import { NavLink as RouteNavLink } from 'react-router-dom';
+import { Link as RouteNavLink } from 'react-router-dom';
 import styled from 'styled-components';
 import RightIcon from './right.svg'; //
 
@@ -69,14 +69,6 @@ const ParticipantCount = styled.span`
 const Logo = styled.img`
   height: 14px; // Set the height of your logo
 `;
-
-// This is a placeholder for your trials data. You would replace this with your actual data retrieval logic, possibly from a backend or state management.
-const mockTrials = [
-  { id: '01', name: 'Trial 01', participants: 230 },
-  { id: '02', name: 'Trial 02', participants: 577 },
-  { id: '03', name: 'Trial 03', participants: 80 },
-  // ...more trials
-];
 
 const GET_TRIALS = gql`
   query GetTrials {

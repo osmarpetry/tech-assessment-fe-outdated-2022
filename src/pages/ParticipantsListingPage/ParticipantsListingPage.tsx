@@ -1,5 +1,5 @@
 import React from 'react';
-import { NavLink, NavLink as RouteNavLink } from 'react-router-dom';
+import { Link, useLocation, useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import RightIcon from '../TrialsListingPage/right.svg'; // Import the SVG logo file
 import { useQuery, gql } from '@apollo/client';
@@ -30,7 +30,8 @@ const ParticipantCard = styled.div`
   }
 `;
 
-const ParticipantLink = styled(RouteNavLink)`
+const ParticipantLink = styled.span`
+  cursor: not-allowed;
   text-decoration: none;
   display: flex;
   justify-content: space-between;
@@ -76,7 +77,7 @@ const HeaderContainer = styled.div`
   align-items: center;
 `;
 
-const Button = styled(NavLink)`
+const Button = styled(Link)`
   padding: 10px 16px;
   max-height: 30px;
   border-radius: 4px;
@@ -92,14 +93,6 @@ const Button = styled(NavLink)`
   color: rgba(254, 254, 255, 1);
 `;
 
-// This is a placeholder for your participants data. You would replace this with your actual data retrieval logic, possibly from a backend or state management.
-const mockParticipants = [
-  { id: '01', name: 'Participant 01', trials: 3 },
-  { id: '02', name: 'Participant 02', trials: 5 },
-  { id: '03', name: 'Participant 03', trials: 2 },
-  // ...more participants
-];
-
 const GET_PARTICIPANTS = gql`
   query GetParticipants($trialId: Int!) {
     trial(id: $trialId) {
@@ -113,8 +106,11 @@ const GET_PARTICIPANTS = gql`
 `;
 
 const ParticipantsListingPage = () => {
+  const { id } = useParams();
+  const trialId = parseFloat(id);
+
   const { loading, error, data } = useQuery(GET_PARTICIPANTS, {
-    variables: { trialId: 1 }, // Replace '01' with the actual trial ID from the router
+    variables: { trialId }, // Replace '01' with the actual trial ID from the router
   });
 
   if (loading) return <p>Loading...</p>;
@@ -124,11 +120,13 @@ const ParticipantsListingPage = () => {
     <PageContainer>
       <HeaderContainer>
         <Header>Participants</Header>
-        <Button to="/enroll-a-participant">Enroll a participant</Button>
+        <Button to={`/trials/${id}/enroll-a-participant`}>
+          Enroll a participant
+        </Button>
       </HeaderContainer>
       {data?.trial.participants.map((participant) => (
         <ParticipantCard key={participant.id}>
-          <ParticipantLink to={`/participants/${participant.id}`}>
+          <ParticipantLink>
             <ParticipantLinkText>
               <ParticipantName>{participant.name}</ParticipantName>
               <ParticipantCount>{participant.id}</ParticipantCount>
