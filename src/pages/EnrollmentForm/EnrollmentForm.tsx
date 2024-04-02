@@ -77,6 +77,15 @@ const Button = styled.button`
   width: fit-content;
 `;
 
+const Header = styled.h1`
+  color: rgba(0, 0, 0, 1);
+  font-size: 32px;
+  font-weight: 400;
+  line-height: 40px;
+  text-align: left;
+  margin: 20px 0 20px 0;
+`;
+
 type FormData = {
   name: string;
   height: string;
@@ -153,6 +162,8 @@ const EnrollmentForm = () => {
 
   return (
     <FormContainer onSubmit={handleSubmit(onSubmit)}>
+      <Header>Enroll a participant</Header>
+
       <FieldWrapper>
         <Label htmlFor="name">Name</Label>
         <Input
