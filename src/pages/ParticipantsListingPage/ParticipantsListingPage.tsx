@@ -101,7 +101,7 @@ const mockParticipants = [
 ];
 
 const GET_PARTICIPANTS = gql`
-  query GetParticipants($trialId: String!) {
+  query GetParticipants($trialId: Int!) {
     trial(id: $trialId) {
       id
       participants {
@@ -114,7 +114,7 @@ const GET_PARTICIPANTS = gql`
 
 const ParticipantsListingPage = () => {
   const { loading, error, data } = useQuery(GET_PARTICIPANTS, {
-    variables: { trialId: '1' }, // Replace '01' with the actual trial ID from the router
+    variables: { trialId: 1 }, // Replace '01' with the actual trial ID from the router
   });
 
   if (loading) return <p>Loading...</p>;

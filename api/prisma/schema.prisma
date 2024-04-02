@@ -11,18 +11,18 @@ datasource db {
 }
 
 model Trial {
-  id          String      @id @default(uuid())
-  description String
+  id           Int           @id @default(autoincrement())
+  name         String
   participants Participant[]
 }
 
 model Participant {
-  id       String   @id @default(uuid())
+  id       Int     @id @default(autoincrement())
   name     String
   height   Float
   weight   Float
   diabetes Boolean
   covid19  Boolean
-  trialId  String
-  trial    Trial    @relation(fields: [trialId], references: [id])
+  trialId  Int
+  trial    Trial   @relation(fields: [trialId], references: [id])
 }

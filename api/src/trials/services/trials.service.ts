@@ -1,54 +1,43 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
-import { Prisma } from '@prisma/client';
-import { PrismaService } from 'src/common/prisma.service';
-import { Participant, Trial } from 'src/graphql';
+import { Injectable } from '@nestjs/common';
+import { PrismaService } from '../../common/prisma.service';
+import {
+  Trial as TrialModel,
+  Participant as ParticipantModel,
+} from '@prisma/client';
 
 @Injectable()
 export class TrialsService {
-  constructor(private prismaService: PrismaService) {}
+  constructor(private prisma: PrismaService) {}
 
-  async getTrials(whereInput?: Prisma.TrialWhereInput) {
-    return this.prismaService.trial.findMany({
-      where: whereInput,
-      include: { participants: true },
-    });
-  }
-
-  async getTrialsById(id: string) {
-    return this.prismaService.trial.findUnique({
-      where: { id },
-      include: { participants: true },
-    });
-  }
   async addParticipantToTrial(
-    trialId: string,
-    participant: Participant,
-  ): Promise<Trial> {
-    const { diabetes, covid19, weight, height } = participant;
-
-    if (!diabetes) {
-      throw new BadRequestException('Participant must have diabetes');
-    }
-
-    if (covid19) {
-      throw new BadRequestException('Participant must not have had COVID');
-    }
-
-    const bmi = (weight / (height * height)) * 703;
-
-    if (bmi <= 18 || bmi >= 30) {
-      throw new BadRequestException(
-        'Participant BMI must be between 18 and 30',
-      );
-    }
-
-    return await this.prismaService.trial.update({
-      where: { id: trialId },
+    trialId: number,
+    participant: {
+      name: string;
+      covid19: boolean;
+      diabetes: boolean;
+      height: number;
+      weight: number;
+    },
+  ): Promise<ParticipantModel> {
+    return this.prisma.participant.create({
       data: {
-        participants: {
-          create: participant,
+        ...participant,
+        trial: {
+          connect: { id: trialId },
         },
       },
+    });
+  }
+
+  async trial(trialId: number): Promise<TrialModel | null> {
+    return this.prisma.trial.findUnique({
+      where: { id: trialId },
+      include: { participants: true },
+    });
+  }
+
+  async trials(): Promise<TrialModel[]> {
+    return this.prisma.trial.findMany({
       include: { participants: true },
     });
   }

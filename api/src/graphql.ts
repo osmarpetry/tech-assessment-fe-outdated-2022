@@ -9,7 +9,21 @@
 /* eslint-disable */
 
 export interface ParticipantInput {
-    id: string;
+    covid19: boolean;
+    diabetes: boolean;
+    height: number;
+    name: string;
+    weight: number;
+}
+
+export interface Trial {
+    id: number;
+    name: string;
+    participants: Participant[];
+}
+
+export interface Participant {
+    id: number;
     name: string;
     height: number;
     weight: number;
@@ -18,28 +32,12 @@ export interface ParticipantInput {
 }
 
 export interface IQuery {
-    participants(): Participant[] | Promise<Participant[]>;
     trials(): Trial[] | Promise<Trial[]>;
-    trial(id: string): Trial | Promise<Trial>;
-}
-
-export interface Participant {
-    id: string;
-    name: string;
-    height: number;
-    weight: number;
-    diabetes: boolean;
-    covid19: boolean;
-}
-
-export interface Trial {
-    id: string;
-    description: string;
-    participants: Participant[];
+    trial(id: number): Nullable<Trial> | Promise<Nullable<Trial>>;
 }
 
 export interface IMutation {
-    addParticipantToTrial(trialId: string, participant: ParticipantInput): Trial | Promise<Trial>;
+    addParticipantToTrial(trialId: number, participant: ParticipantInput): Participant | Promise<Participant>;
 }
 
 type Nullable<T> = T | null;
