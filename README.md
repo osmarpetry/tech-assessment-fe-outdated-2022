@@ -1,3 +1,5 @@
+> Nao executado CI para dependencias por ser um projeto boilerplate para teste nunca usado.
+
 # Sr. Engineer tech assessment
 As a Sr. Engineer we want to see your skills with architecture, security, performance and clean code.
 <br />
