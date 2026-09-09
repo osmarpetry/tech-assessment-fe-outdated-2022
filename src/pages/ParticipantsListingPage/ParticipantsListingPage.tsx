@@ -15,6 +15,12 @@ import {
   Logo,
 } from './styled';
 
+type Participant = {
+  id: string;
+  name: string;
+  createdAt: string;
+};
+
 const GET_PARTICIPANTS = gql`
   query GetParticipants($trialId: Int!) {
     trial(id: $trialId) {
@@ -32,7 +38,7 @@ const ParticipantsListingPage = () => {
   const { id } = useParams();
   const trialId = parseFloat(id || '');
 
-  const { loading, error, data } = useQuery(GET_PARTICIPANTS, {
+  const { loading, error, data } = useQuery<{ trial: { participants: Participant[] } }>(GET_PARTICIPANTS, {
     variables: { trialId },
   });
 

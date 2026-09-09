@@ -31,6 +31,11 @@ const ADD_PARTICIPANT_TO_TRIAL = gql`
   }
 `;
 
+type Trial = {
+  id: string;
+  name: string;
+};
+
 const GET_TRIALS = gql`
   query GetTrials {
     trials {
@@ -57,7 +62,7 @@ const EnrollmentForm = () => {
   const [addParticipantToTrial, { loading: loadingAdd }] = useMutation(
     ADD_PARTICIPANT_TO_TRIAL
   );
-  const { data: trialsData, loading } = useQuery(GET_TRIALS);
+  const { data: trialsData, loading } = useQuery<{ trials: Trial[] }>(GET_TRIALS);
 
   const {
     register,

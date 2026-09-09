@@ -71,7 +71,11 @@ const Content = styled.main`
   }
 `;
 
-const Dashboard = ({ children }) => {
+interface DashboardProps {
+  children: React.ReactNode;
+}
+
+const Dashboard = ({ children }: DashboardProps) => {
   return (
     <DashboardContainer>
       <Header>

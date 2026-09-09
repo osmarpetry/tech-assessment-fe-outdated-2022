@@ -11,6 +11,12 @@ import {
   Logo,
 } from './styled';
 
+type Trial = {
+  id: string;
+  name: string;
+  participants: { id: string }[];
+};
+
 const GET_TRIALS = gql`
   query GetTrials {
     trials {
@@ -24,7 +30,7 @@ const GET_TRIALS = gql`
 `;
 
 const TrialsListingPage = () => {
-  const { loading, error, data } = useQuery(GET_TRIALS);
+  const { loading, error, data } = useQuery<{ trials: Trial[] }>(GET_TRIALS);
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error :(</p>;
